@@ -18,3 +18,8 @@ test:
 # generate
 generate:
 	go generate ./...
+
+.PHONY: docker-image
+# docker-image
+docker-image:
+	docker build -t shortenurl .
