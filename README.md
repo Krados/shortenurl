@@ -73,7 +73,9 @@ $ docker run -itd --name shortenurl -p 8080:8080 shortenurl
 ## Network isolation is important then do like this
 
 ```
+# create a user-defined bridge network
 $ docker network create asgard
+
 $ docker run -itd --name mysql --network asgard -e MYSQL_ROOT_PASSWORD={YOUROOTPASSWD} mysql
 $ docker run -itd --name redis --network asgard redis
 $ docker run -itd --name shortenurl --network asgard -p 8080:8080 shortenurl
