@@ -3,6 +3,6 @@ server:
     addr: 0.0.0.0:8080
 data:
   mysql:
-    dsn: root:123456@tcp(192.168.168.13:3306)/shortenurl?charset=utf8mb4&parseTime=True&loc=Local
+    dsn: root:passwd@tcp(mysql:3306)/shortenurl?charset=utf8mb4&parseTime=True&loc=Local
   redis:
-    addrs: [192.168.168.13:6379]
+    addrs: [redis:6379]
