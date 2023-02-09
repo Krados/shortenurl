@@ -59,4 +59,37 @@ $ make build
 
 ```
 $ .\bin\cmd.exe -conf .\configs\
+or 
+$ ./bin/cmd -conf ./configs
+```
+
+## Run the service inside a container
+
+```
+$ make docker-image
+$ docker run -itd --name shortenurl -p 8080:8080 shortenurl
+```
+
+## Network isolation is important then do like this
+
+```
+$ docker network create asgard
+$ docker run -itd --name mysql --network asgard -e MYSQL_ROOT_PASSWORD={YOUROOTPASSWD} mysql
+$ docker run -itd --name redis --network asgard redis
+$ docker run -itd --name shortenurl --network asgard -p 8080:8080 shortenurl
+```
+
+## Try it out
+
+```
+# create a new code
+$ curl --location --request POST 'localhost:8080/api/v1/shorten' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "long_url":"http://www.google.com"
+}'
+
+
+# get url from code
+$ curl --location --request GET 'localhost:8080/api/v1/shorten/4LAoxKG2tAY'
 ```
