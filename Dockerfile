@@ -1,9 +1,22 @@
-FROM golang:1.19
+FROM golang:1.19-alpine AS build_base
 
-COPY . /app
 WORKDIR /app
 
-RUN make build
+COPY go.mod .
+COPY go.sum .
+
+RUN go mod download
+
+FROM build_base AS server_builder
+
+COPY . .
+
+RUN go build -o ./bin/ ./...
+
+FROM alpine
+
+COPY --from=server_builder /app/bin/cmd /bin/cmd
+COPY --from=server_builder /app/configs /configs
 
 EXPOSE 8080
 
